@@ -36,7 +36,7 @@ class ActionHandlingTests: ImagePickerSheetControllerTests {
         })
         imageController.addAction(defaultAction)
         
-        cancelAction = ImagePickerAction(title: "Cancel", style: .Cancel, handler: { _ in
+        cancelAction = ImagePickerAction(title: "Cancel", style: .cancel, handler: { _ in
             self.cancelActionCalled = self.cancelActionCalled+1
         }, secondaryHandler: { _, _ in
             self.cancelSecondaryActionCalled = self.cancelSecondaryActionCalled+1

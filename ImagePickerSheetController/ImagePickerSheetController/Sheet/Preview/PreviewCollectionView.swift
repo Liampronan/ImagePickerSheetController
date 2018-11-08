@@ -8,51 +8,52 @@
 
 import UIKit
 
+
 class PreviewCollectionView: UICollectionView {
-    
+
     var bouncing: Bool {
         if contentOffset.x < -contentInset.left { return true }
         if contentOffset.x + frame.width > contentSize.width + contentInset.right { return true }
         return false
     }
-    
+
     var imagePreviewLayout: PreviewCollectionViewLayout {
         return collectionViewLayout as! PreviewCollectionViewLayout
     }
-    
+
     // MARK: - Initialization
 
     init() {
-        super.init(frame: CGRectZero, collectionViewLayout: PreviewCollectionViewLayout())
-        
+        super.init(frame: .zero, collectionViewLayout: PreviewCollectionViewLayout())
+
         initialize()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
+
         initialize()
     }
-    
+
     private func initialize() {
         panGestureRecognizer.addTarget(self, action: #selector(PreviewCollectionView.handlePanGesture(_:)))
     }
-    
+
     // MARK: - Panning
 
-    @objc private func handlePanGesture(gestureRecognizer: UIPanGestureRecognizer) {
-        if gestureRecognizer.state == .Ended {
-            let translation = gestureRecognizer.translationInView(self)
+    @objc private func handlePanGesture(_ gestureRecognizer: UIPanGestureRecognizer) {
+        if gestureRecognizer.state == .ended {
+            let translation = gestureRecognizer.translation(in: self)
             if translation == CGPoint() {
                 if !bouncing {
-                    let possibleIndexPath = indexPathForItemAtPoint(gestureRecognizer.locationInView(self))
+                    let possibleIndexPath = indexPathForItem(at: gestureRecognizer.location(in: self))
                     if let indexPath = possibleIndexPath {
-                        selectItemAtIndexPath(indexPath, animated: false, scrollPosition: .None)
-                        delegate?.collectionView?(self, didSelectItemAtIndexPath: indexPath)
+                        selectItem(at: indexPath, animated: false, scrollPosition: .top)
+                        delegate?.collectionView?(self, didSelectItemAt: indexPath)
                     }
                 }
             }
         }
     }
-    
+
 }

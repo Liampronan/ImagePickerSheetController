@@ -30,7 +30,7 @@ class ImagePickerSheetControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        imageController = ImagePickerSheetController(mediaType: .ImageAndVideo)
+        imageController = ImagePickerSheetController(mediaType: .imageAndVideo)
     }
     
     override func tearDown() {
