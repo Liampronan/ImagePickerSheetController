@@ -55,7 +55,7 @@ public class ImagePickerSheetController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.alwaysBounceHorizontal = true
         collectionView.register(PreviewCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: PreviewCollectionViewCell.self))
-        collectionView.register(PreviewSupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: PreviewSupplementaryView.self))
+        collectionView.register(PreviewSupplementaryView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: String(describing: PreviewSupplementaryView.self))
 
         return collectionView
     }()
@@ -135,11 +135,11 @@ public class ImagePickerSheetController: UIViewController {
         modalPresentationStyle = .custom
         transitioningDelegate = self
 
-        NotificationCenter.default.addObserver(sheetController, selector: #selector(SheetController.handleCancelAction), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(sheetController, selector: #selector(SheetController.handleCancelAction), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
     }
 
     deinit {
-        NotificationCenter.default.removeObserver(sheetController, name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.removeObserver(sheetController, name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
     }
 
     // MARK: - View Lifecycle
@@ -399,7 +399,7 @@ extension ImagePickerSheetController: UICollectionViewDataSource {
 
     public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 
-        let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: PreviewSupplementaryView.self), for: indexPath) as! PreviewSupplementaryView
+        let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: String(describing: PreviewSupplementaryView.self), for: indexPath) as! PreviewSupplementaryView
         view.isUserInteractionEnabled = false
         view.buttonInset = UIEdgeInsets(top: 0, left: previewCheckmarkInset, bottom: previewCheckmarkInset, right: 0)
         view.selected = selectedImageIndices.contains(indexPath.section)
